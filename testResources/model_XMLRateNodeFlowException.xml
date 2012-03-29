@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- XML Schema compliant, but RateNodeFlowException (RN0001) -->
+
+<Model name="Model name" schema="http://www.aifb.uni-karlsruhe.de/com/systemDynamics/model-schema" schemaVersion="1.0">
+  <Nodes>
+    <LevelNodes>
+      <LevelNode id="LN0001" name="Level node 1" startValue="0"/>
+    </LevelNodes>
+    <RateNodes>
+      <RateNode id="RN0001" name="Rate node 1">
+        <Formula>
+          <ASTLevelNode levelNodeIdRef="LN0001"/>
+        </Formula>
+      </RateNode>
+    </RateNodes>
+  </Nodes>
+</Model>

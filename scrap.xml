@@ -1,0 +1,30 @@
+<Chart id="CH0002" name="Quality: Critical Software Errors in Command & Control System" file="CriticalSoftwareErrors_chart" xAxisLabel="Time (days)" yAxisLabel="Number of Errors">
+    <ChartLevelNodes>
+      <ChartLevelNode levelNodeIdRef="LN0009" label="Errors Outstanding" />
+      <ChartLevelNode levelNodeIdRef="LN0017" label="Errors Resolved" />
+      <ChartLevelNode levelNodeIdRef="LN0005" label="Maximum Error Target" />
+    </ChartLevelNodes>
+  </Chart>
+  <Chart id="CH0003" name="Quality: General Software Errors in Command & Control System" file="GeneralSoftwareErrors_chart" xAxisLabel="Time (days)" yAxisLabel="Number of Errors">
+    <ChartLevelNodes>
+      <ChartLevelNode levelNodeIdRef="LN0016" label="Errors Outstanding" />
+      <ChartLevelNode levelNodeIdRef="LN0021" label="Errors Resolved" />
+      <ChartLevelNode levelNodeIdRef="LN0018" label="Maximum Error Target" />
+    </ChartLevelNodes>
+  </Chart>
+  <Chart id="CH0004" name="CDR Entrance Criterion: Detailed Test Requirements" file="TestRequirements_chart" xAxisLabel="Time (days)" yAxisLabel="Progress (% complete)">
+    <ChartLevelNodes>
+      <ChartLevelNode levelNodeIdRef="LN0027" label="Detailed Test Requirements" />
+    </ChartLevelNodes>
+  </Chart>
+  <Chart id="CH0005" name="CDR Entrance Criterion: Engineering Drawings" file="EngineeringDrawings_chart" xAxisLabel="Time (days)" yAxisLabel="Progress (% complete)">
+    <ChartLevelNodes>
+      <ChartLevelNode levelNodeIdRef="LN0027" label="Engineering Drawings" />
+    </ChartLevelNodes>
+  </Chart>
+  <PlanNodes>
+    <PlanNode id="PN0001" name="Range_Plan" startValue="4000">
+      <PlanNodeIncrement id="PI0001" length="45" slope="-50" />
+      <PlanNodeIncrement id="PI0002" length="45" slope="0" />
+    </PlanNode>
+  </PlanNodes>

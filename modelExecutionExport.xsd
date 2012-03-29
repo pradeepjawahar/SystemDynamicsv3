@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+
+
+<!-- XML Schema for a System Dynamics model execution export -->
+
+<!-- REMARKS:
+       (1) In an XPath expression, '//' stands for recursive descent in the tree.
+       (2) In an XPath expression, './/' must be at the beginning of the expression!
+  -->
+
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.0">
+
+  <xsd:element name="ModelExecutionExport">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="LevelNodes">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="LevelNode" maxOccurs="unbounded">
+                <xsd:complexType>
+                  <xsd:attribute name="id"              type="xsd:positiveInteger"     use="required"/>
+                  <xsd:attribute name="name"            type="xsd:string"              use="required"/>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="ExecutionValues">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="RoundValues" maxOccurs="unbounded">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="LevelNodeValue" maxOccurs="unbounded">
+                      <xsd:complexType>
+                        <xsd:attribute name="nodeIdRef" type="xsd:positiveInteger"     use="required"/>
+                        <xsd:attribute name="value"     type="xsd:double"              use="required"/>
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                  <xsd:attribute name="round"           type="xsd:nonNegativeInteger"  use="required"/>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+      <xsd:attribute name="modelName"                   type="xsd:string"              use="required"/>
+      <xsd:attribute name="numberRounds"                type="xsd:nonNegativeInteger"  use="required"/>
+      <xsd:attribute name="schema"                      type="xsd:string" fixed="http://www.aifb.uni-karlsruhe.de/com/systemDynamics/modelExecutionExport-schema" use="required"/>
+      <xsd:attribute name="schemaVersion"               type="xsd:string" fixed="1.0" use="required"/>
+    </xsd:complexType>
+
+<!-- unique Ids -->
+    <xsd:key name="nodeId">
+      <xsd:selector xpath="./LevelNodes/LevelNode"/>
+      <xsd:field xpath="@id"/>
+    </xsd:key>
+    <xsd:key name="round">
+       <xsd:selector xpath="./ExecutionValues/RoundValues"/>
+       <xsd:field xpath="@round"/>
+    </xsd:key>
+    
+<!-- references for flows -->
+    <xsd:keyref name="LevelNodeValueNodeIdRef" refer="nodeId">
+      <xsd:selector xpath="./ExecutionValues/RoundValues/LevelNodeValue"/>
+      <xsd:field xpath="@nodeIdRef"/>
+    </xsd:keyref>
+
+  </xsd:element>
+</xsd:schema>

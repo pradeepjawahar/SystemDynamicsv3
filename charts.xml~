@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Charts>
+  <Chart id="CH0001" name="TPM: Range" file="Range_chart" xAxisLabel="Time (days)" yAxisLabel="Range (miles)">
+    <ChartLevelNodes>
+      <ChartLevelNode levelNodeIdRef="LN0026" label="Range" />
+      <ChartLevelNode levelNodeIdRef="LN0010" label="Range Target" />
+    </ChartLevelNodes>
+    <ChartPlanNodes>
+      <ChartPlanNode planNodeIdRef="PN0001" label="Range Plan" />
+    </ChartPlanNodes>
+  </Chart>
+<Chart id="CH0002" name="Quality: Critical Software Errors in Command & Control System" file="CriticalSoftwareErrors_chart" xAxisLabel="Time (days)" yAxisLabel="Number of Errors">
+    <ChartLevelNodes>
+      <ChartLevelNode levelNodeIdRef="LN0009" label="Errors Outstanding" />
+      <ChartLevelNode levelNodeIdRef="LN0017" label="Errors Resolved" />
+      <ChartLevelNode levelNodeIdRef="LN0005" label="Maximum Error Target" />
+    </ChartLevelNodes>
+  </Chart>
+<PlanNodes>
+    <PlanNode id="PN0001" name="Range_Plan" startValue="4000">
+      <PlanNodeIncrement id="PI0001" length="45" slope="-50" />
+      <PlanNodeIncrement id="PI0002" length="45" slope="0" />
+    </PlanNode>
+  </PlanNodes>
+</Charts>

@@ -1,0 +1,508 @@
+<?xml version="1.0"?>
+
+
+<!-- XML Schema for a System Dynamics model  -->
+
+<!-- REMARKS:
+       (1) In an XPath expression, '//' stands for recursive descent in the tree.
+       (2) In an XPath expression, './/' must be at the beginning of the expression!
+  -->
+
+<!--
+ * Changes:
+ * ========
+ *
+ * 2009-10-13: typing error in element "AuxiliaryNode2RateNodeDependency" corrected
+  -->
+
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.0">
+
+  <xsd:element name="Model">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Nodes">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="LevelNodes">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="LevelNode" maxOccurs="unbounded">
+                      <xsd:complexType>
+                        <xsd:attribute name="id"                           use="required">
+                          <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                              <xsd:pattern value="LN[0-9]{4}"/>
+                            </xsd:restriction>
+                          </xsd:simpleType>
+                        </xsd:attribute>
+                        <xsd:attribute name="name"       type="xsd:string" use="required"/>
+                        <xsd:attribute name="startValue" type="xsd:double" use="required"/>
+                        <xsd:attribute name="xCoordinate" default="10.0">
+                          <xsd:simpleType>
+                            <xsd:restriction base="xsd:double">
+                              <xsd:minInclusive value="0.0"/>
+                            </xsd:restriction>
+                          </xsd:simpleType>
+                        </xsd:attribute>
+                        <xsd:attribute name="yCoordinate" default="10.0">
+                          <xsd:simpleType>
+                            <xsd:restriction base="xsd:double">
+                              <xsd:minInclusive value="0.0"/>
+                            </xsd:restriction>
+                          </xsd:simpleType>
+                        </xsd:attribute>
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="SourceSinkNodes" minOccurs="0">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="SourceSinkNode" maxOccurs="unbounded">
+                      <xsd:complexType>
+                        <xsd:attribute name="id"                     use="required">
+                          <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                              <xsd:pattern value="SN[0-9]{4}"/>
+                            </xsd:restriction>
+                          </xsd:simpleType>
+                        </xsd:attribute>
+                        <xsd:attribute name="xCoordinate" default="10.0">
+                          <xsd:simpleType>
+                            <xsd:restriction base="xsd:double">
+                              <xsd:minInclusive value="0.0"/>
+                            </xsd:restriction>
+                          </xsd:simpleType>
+                        </xsd:attribute>
+                        <xsd:attribute name="yCoordinate" default="10.0">
+                          <xsd:simpleType>
+                            <xsd:restriction base="xsd:double">
+                              <xsd:minInclusive value="0.0"/>
+                            </xsd:restriction>
+                          </xsd:simpleType>
+                        </xsd:attribute>
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="RateNodes" minOccurs="0">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="RateNode" maxOccurs="unbounded">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element name="Formula" type="myFormula"/>
+                        </xsd:sequence>
+                        <xsd:attribute name="id"                     use="required">
+                          <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                              <xsd:pattern value="RN[0-9]{4}"/>
+                            </xsd:restriction>
+                          </xsd:simpleType>
+                        </xsd:attribute>
+                        <xsd:attribute name="name" type="xsd:string" use="required"/>
+                        <xsd:attribute name="xCoordinate" default="10.0">
+                          <xsd:simpleType>
+                            <xsd:restriction base="xsd:double">
+                              <xsd:minInclusive value="0.0"/>
+                            </xsd:restriction>
+                          </xsd:simpleType>
+                        </xsd:attribute>
+                        <xsd:attribute name="yCoordinate" default="10.0">
+                          <xsd:simpleType>
+                            <xsd:restriction base="xsd:double">
+                              <xsd:minInclusive value="0.0"/>
+                            </xsd:restriction>
+                          </xsd:simpleType>
+                        </xsd:attribute>
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="AuxiliaryNodes" minOccurs="0">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="AuxiliaryNode" maxOccurs="unbounded">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element name="Formula" type="myFormula"/>
+                        </xsd:sequence>
+                        <xsd:attribute name="id"                     use="required">
+                          <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                              <xsd:pattern value="AN[0-9]{4}"/>
+                            </xsd:restriction>
+                          </xsd:simpleType>
+                        </xsd:attribute>
+                        <xsd:attribute name="name" type="xsd:string" use="required"/>
+                        <xsd:attribute name="xCoordinate" default="10.0">
+                          <xsd:simpleType>
+                            <xsd:restriction base="xsd:double">
+                              <xsd:minInclusive value="0.0"/>
+                            </xsd:restriction>
+                          </xsd:simpleType>
+                        </xsd:attribute>
+                        <xsd:attribute name="yCoordinate" default="10.0">
+                          <xsd:simpleType>
+                            <xsd:restriction base="xsd:double">
+                              <xsd:minInclusive value="0.0"/>
+                            </xsd:restriction>
+                          </xsd:simpleType>
+                        </xsd:attribute>
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="ConstantNodes" minOccurs="0">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="ConstantNode" maxOccurs="unbounded">
+                      <xsd:complexType>
+                        <xsd:attribute name="id"                              use="required">
+                          <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                              <xsd:pattern value="CN[0-9]{4}"/>
+                            </xsd:restriction>
+                          </xsd:simpleType>
+                        </xsd:attribute>
+                        <xsd:attribute name="name"          type="xsd:string" use="required"/>
+                        <xsd:attribute name="constantValue" type="xsd:double" use="required"/>
+                        <xsd:attribute name="xCoordinate" default="10.0">
+                          <xsd:simpleType>
+                            <xsd:restriction base="xsd:double">
+                              <xsd:minInclusive value="0.0"/>
+                            </xsd:restriction>
+                          </xsd:simpleType>
+                        </xsd:attribute>
+                        <xsd:attribute name="yCoordinate" default="10.0">
+                          <xsd:simpleType>
+                            <xsd:restriction base="xsd:double">
+                              <xsd:minInclusive value="0.0"/>
+                            </xsd:restriction>
+                          </xsd:simpleType>
+                        </xsd:attribute>
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="Flows" minOccurs="0">
+          <xsd:complexType>
+            <xsd:choice maxOccurs="unbounded">
+              <xsd:element name="RateNode2LevelNodeFlow">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="AdditionalControlPoints" type="additionalControlPoints" minOccurs="0"/>
+                  </xsd:sequence>
+                  <xsd:attribute name="fromRateNodeIdRef"       type="xsd:string" use="required"/>
+                  <xsd:attribute name="toLevelNodeIdRef"        type="xsd:string" use="required"/>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="LevelNode2RateNodeFlow">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="AdditionalControlPoints" type="additionalControlPoints" minOccurs="0"/>
+                  </xsd:sequence>
+                  <xsd:attribute name="fromLevelNodeIdRef"      type="xsd:string" use="required"/>
+                  <xsd:attribute name="toRateNodeIdRef"         type="xsd:string" use="required"/>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="RateNode2SourceSinkNodeFlow">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="AdditionalControlPoints" type="additionalControlPoints" minOccurs="0"/>
+                  </xsd:sequence>
+                  <xsd:attribute name="fromRateNodeIdRef"       type="xsd:string" use="required"/>
+                  <xsd:attribute name="toSourceSinkNodeIdRef"   type="xsd:string" use="required"/>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="SourceSinkNode2RateNodeFlow">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="AdditionalControlPoints" type="additionalControlPoints" minOccurs="0"/>
+                  </xsd:sequence>
+                  <xsd:attribute name="fromSourceSinkNodeIdRef" type="xsd:string" use="required"/>
+                  <xsd:attribute name="toRateNodeIdRef"         type="xsd:string" use="required"/>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:choice>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="Dependencies" minOccurs="0">
+          <xsd:complexType>
+            <xsd:choice maxOccurs="unbounded">
+              <xsd:element name="AuxiliaryNode2AuxiliaryNodeDependency">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="AdditionalControlPoints" type="additionalControlPoints"/>
+                  </xsd:sequence>
+                  <xsd:attribute name="fromAuxiliaryNodeIdRef"  type="xsd:string" use="required"/>
+                  <xsd:attribute name="toAuxiliaryNodeIdRef"    type="xsd:string" use="required"/>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="AuxiliaryNode2RateNodeDependency">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="AdditionalControlPoints" type="additionalControlPoints"/>
+                  </xsd:sequence>
+                  <xsd:attribute name="fromAuxiliaryNodeIdRef"  type="xsd:string" use="required"/>
+                  <xsd:attribute name="toRateNodeIdRef"         type="xsd:string" use="required"/>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="ConstantNode2AuxiliaryNodeDependency">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="AdditionalControlPoints" type="additionalControlPoints"/>
+                  </xsd:sequence>
+                  <xsd:attribute name="fromConstantNodeIdRef"   type="xsd:string" use="required"/>
+                  <xsd:attribute name="toAuxiliaryNodeIdRef"    type="xsd:string" use="required"/>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="ConstantNode2RateNodeDependency">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="AdditionalControlPoints" type="additionalControlPoints"/>
+                  </xsd:sequence>
+                  <xsd:attribute name="fromConstantNodeIdRef"   type="xsd:string" use="required"/>
+                  <xsd:attribute name="toRateNodeIdRef"         type="xsd:string" use="required"/>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="LevelNode2AuxiliaryNodeDependency">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="AdditionalControlPoints" type="additionalControlPoints"/>
+                  </xsd:sequence>
+                  <xsd:attribute name="fromLevelNodeIdRef"      type="xsd:string" use="required"/>
+                  <xsd:attribute name="toAuxiliaryNodeIdRef"    type="xsd:string" use="required"/>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="LevelNode2RateNodeDependency">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="AdditionalControlPoints" type="additionalControlPoints"/>
+                  </xsd:sequence>
+                  <xsd:attribute name="fromLevelNodeIdRef"      type="xsd:string" use="required"/>
+                  <xsd:attribute name="toRateNodeIdRef"         type="xsd:string" use="required"/>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:choice>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+      <xsd:attribute name="name"          type="xsd:string"             use="required"/>
+      <xsd:attribute name="schema"        type="xsd:string" fixed="http://www.aifb.uni-karlsruhe.de/com/systemDynamics/model-schema" use="required"/>
+      <xsd:attribute name="schemaVersion" type="xsd:string" fixed="1.0" use="required"/>
+    </xsd:complexType>
+
+    <!-- unique Ids -->
+    <xsd:key name="lnId">
+      <xsd:selector xpath="./Nodes/LevelNodes/LevelNode"/>
+      <xsd:field xpath="@id"/>
+    </xsd:key>
+    <xsd:key name="snId">
+      <xsd:selector xpath="./Nodes/SourceSinkNodes/SourceSinkNode"/>
+      <xsd:field xpath="@id"/>
+    </xsd:key>
+    <xsd:key name="rnId">
+      <xsd:selector xpath="./Nodes/RateNodes/RateNode"/>
+      <xsd:field xpath="@id"/>
+    </xsd:key>
+    <xsd:key name="anId">
+      <xsd:selector xpath="./Nodes/AuxiliaryNodes/AuxiliaryNode"/>
+      <xsd:field xpath="@id"/>
+    </xsd:key>
+    <xsd:key name="cnId">
+      <xsd:selector xpath="./Nodes/ConstantNodes/ConstantNode"/>
+      <xsd:field xpath="@id"/>
+    </xsd:key>
+
+    <!-- references for flows -->
+    <xsd:keyref name="F-R2LfromRnIdRef" refer="rnId">
+      <xsd:selector xpath="./Flows/RateNode2LevelNodeFlow"/>
+      <xsd:field xpath="@fromRateNodeIdRef"/>
+    </xsd:keyref>
+    <xsd:keyref name="F-R2LtoLnIdRef" refer="lnId">
+      <xsd:selector xpath="./Flows/RateNode2LevelNodeFlow"/>
+      <xsd:field xpath="@toLevelNodeIdRef"/>
+    </xsd:keyref>
+    <xsd:keyref name="F-L2RfromLnIdRef" refer="lnId">
+      <xsd:selector xpath="./Flows/LevelNode2RateNodeFlow"/>
+      <xsd:field xpath="@fromLevelNodeIdRef"/>
+    </xsd:keyref>
+    <xsd:keyref name="F-L2RtoRnRnIdRef" refer="rnId">
+      <xsd:selector xpath="./Flows/LevelNode2RateNodeFlow"/>
+      <xsd:field xpath="@toRateNodeIdRef"/>
+    </xsd:keyref>
+    <xsd:keyref name="F-R2SfromRnIdRef" refer="rnId">
+      <xsd:selector xpath="./Flows/RateNode2SourceSinkNodeFlow"/>
+      <xsd:field xpath="@fromRateNodeIdRef"/>
+    </xsd:keyref>
+    <xsd:keyref name="F-R2StoSnIdRef" refer="snId">
+      <xsd:selector xpath="./Flows/RateNode2SourceSinkNodeFlow"/>
+      <xsd:field xpath="@toSourceSinkNodeIdRef"/>
+    </xsd:keyref>
+    <xsd:keyref name="F-S2RfromSnIdRef" refer="snId">
+      <xsd:selector xpath="./Flows/SourceSinkNode2RateNodeFlow"/>
+      <xsd:field xpath="@fromSourceSinkNodeIdRef"/>
+    </xsd:keyref>
+    <xsd:keyref name="F-S2RtoRnIdRef" refer="rnId">
+      <xsd:selector xpath="./Flows/sourceSinkNode2RateNodeFlow"/>
+      <xsd:field xpath="@toRateNodeIdRef"/>
+    </xsd:keyref>
+    
+    <!-- references for dependencies -->
+    <xsd:keyref name="D-A2AfromAnIdRef" refer="anId">
+      <xsd:selector xpath="./Dependencies/AuxiliaryNode2AuxiliaryNodeDependency"/>
+      <xsd:field xpath="@fromAuxiliaryNodeIdRef"/>
+    </xsd:keyref>
+    <xsd:keyref name="D-A2AtoAnIdRef" refer="anId">
+      <xsd:selector xpath="./Dependencies/AuxiliaryNode2AuxiliaryNodeDependency"/>
+      <xsd:field xpath="@toAuxiliaryNodeIdRef"/>
+    </xsd:keyref>
+    <xsd:keyref name="D-A2RfromAnIdRef" refer="anId">
+      <xsd:selector xpath="./Dependencies/AuxiliaryNode2RateNodeDependency"/>
+      <xsd:field xpath="@fromAuxiliaryNodeIdRef"/>
+    </xsd:keyref>
+    <xsd:keyref name="D-A2RtoRnIdRef" refer="rnId">
+      <xsd:selector xpath="./Dependencies/AuxiliaryNode2RateNodeDependency"/>
+      <xsd:field xpath="@toRateNodeIdRef"/>
+    </xsd:keyref>
+    <xsd:keyref name="D-C2AfromCnIdRef" refer="cnId">
+      <xsd:selector xpath="./Dependencies/ConstantNode2AuxiliaryNodeDependency"/>
+      <xsd:field xpath="@fromConstantNodeIdRef"/>
+    </xsd:keyref>
+    <xsd:keyref name="D-C2AtoAnIdRef" refer="anId">
+      <xsd:selector xpath="./Dependencies/ConstantNode2AuxiliaryNodeDependency"/>
+      <xsd:field xpath="@toAuxiliaryNodeIdRef"/>
+    </xsd:keyref>
+    <xsd:keyref name="D-C2RfromCnIdRef" refer="cnId">
+      <xsd:selector xpath="./Dependencies/ConstantNode2RateNodeDependency"/>
+      <xsd:field xpath="@fromConstantNodeIdRef"/>
+    </xsd:keyref>
+    <xsd:keyref name="D-C2RtoRnIdRef" refer="rnId">
+      <xsd:selector xpath="./Dependencies/ConstantNode2RateNodeDependency"/>
+      <xsd:field xpath="@toRateNodeIdRef"/>
+    </xsd:keyref>
+    <xsd:keyref name="D-L2AfromLnIdRef" refer="lnId">
+      <xsd:selector xpath="./Dependencies/LevelNode2AuxiliaryNodeDependency"/>
+      <xsd:field xpath="@fromLevelNodeIdRef"/>
+    </xsd:keyref>
+    <xsd:keyref name="D-L2AtoAnIdRef" refer="anId">
+      <xsd:selector xpath="./Dependencies/LevelNode2AuxiliaryNodeDependency"/>
+      <xsd:field xpath="@toAuxiliaryNodeIdRef"/>
+    </xsd:keyref>
+    <xsd:keyref name="D-L2RfromLnIdRef" refer="lnId">
+      <xsd:selector xpath="./Dependencies/LevelNode2RateNodeDependency"/>
+      <xsd:field xpath="@fromLevelNodeIdRef"/>
+    </xsd:keyref>
+    <xsd:keyref name="D-L2RtoRnIdRef" refer="rnId">
+      <xsd:selector xpath="./Dependencies/LevelNode2RateNodeDependency"/>
+      <xsd:field xpath="@toRateNodeIdRef"/>
+    </xsd:keyref>
+
+    <!-- references for formulas -->
+    <xsd:keyref name="auxiliaryNodeIdRef" refer="anId">
+      <xsd:selector xpath=".//ASTAuxiliaryNode"/>
+      <xsd:field xpath="@auxiliaryNodeIdRef"/>
+    </xsd:keyref>
+    <xsd:keyref name="constantNodeIdRef" refer="cnId">
+      <xsd:selector xpath=".//ASTConstantNode"/>
+      <xsd:field xpath="@constantNodeIdRef"/>
+    </xsd:keyref>
+    <xsd:keyref name="levelNodeIdRef" refer="lnId">
+      <xsd:selector xpath=".//ASTLevelNode"/>
+      <xsd:field xpath="@levelNodeIdRef"/>
+    </xsd:keyref>
+
+  </xsd:element>
+
+  <!-- definition of formulas -->
+  <xsd:complexType name="myFormula">
+    <xsd:choice>
+      <xsd:element name="ASTPlus" type="BinaryOperation"/>
+      <xsd:element name="ASTMinus" type="BinaryOperation"/>
+      <xsd:element name="ASTMultiply" type="BinaryOperation"/>
+      <xsd:element name="ASTDivide" type="BinaryOperation"></xsd:element>
+      <xsd:element name="ASTRound" type="BinaryOperation"></xsd:element>
+      <xsd:element name="ASTMax" type="BinaryOperation"></xsd:element>
+      <xsd:element name="ASTMin" type="BinaryOperation"></xsd:element>
+      <xsd:element name="ASTAuxiliaryNode" type="ASTAuxiliaryNode"/>
+      <xsd:element name="ASTConstantNode" type="ASTConstantNode"/>
+      <xsd:element name="ASTLevelNode" type="ASTLevelNode"/>
+    </xsd:choice>
+  </xsd:complexType>
+
+  <xsd:complexType name="BinaryOperation">
+    <xsd:sequence>
+    <xsd:choice>
+      <xsd:element name="ASTPlus" type="BinaryOperation"/>
+      <xsd:element name="ASTMinus" type="BinaryOperation"/>
+      <xsd:element name="ASTMultiply" type="BinaryOperation"/>
+      <xsd:element name="ASTDivide" type="BinaryOperation"></xsd:element>
+      <xsd:element name="ASTRound" type="BinaryOperation"></xsd:element>
+      <xsd:element name="ASTMax" type="BinaryOperation"></xsd:element>
+      <xsd:element name="ASTMin" type="BinaryOperation"></xsd:element>
+      <xsd:element name="ASTAuxiliaryNode" type="ASTAuxiliaryNode"/>
+      <xsd:element name="ASTConstantNode" type="ASTConstantNode"/>
+      <xsd:element name="ASTLevelNode" type="ASTLevelNode"/>
+    </xsd:choice>
+    <xsd:choice>
+      <xsd:element name="ASTPlus" type="BinaryOperation"/>
+      <xsd:element name="ASTMinus" type="BinaryOperation"/>
+      <xsd:element name="ASTMultiply" type="BinaryOperation"/>
+      <xsd:element name="ASTDivide" type="BinaryOperation"></xsd:element>
+      <xsd:element name="ASTRound" type="BinaryOperation"></xsd:element>
+      <xsd:element name="ASTMax" type="BinaryOperation"></xsd:element>
+      <xsd:element name="ASTMin" type="BinaryOperation"></xsd:element>
+      <xsd:element name="ASTAuxiliaryNode" type="ASTAuxiliaryNode"/>
+      <xsd:element name="ASTConstantNode" type="ASTConstantNode"/>
+      <xsd:element name="ASTLevelNode" type="ASTLevelNode"/>
+    </xsd:choice>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ASTAuxiliaryNode">
+    <xsd:attribute name="auxiliaryNodeIdRef" type="xsd:string" use="required"/>
+  </xsd:complexType>
+
+  <xsd:complexType name="ASTConstantNode">
+    <xsd:attribute name="constantNodeIdRef" type="xsd:string" use="required"/>
+  </xsd:complexType>
+
+  <xsd:complexType name="ASTLevelNode">
+    <xsd:attribute name="levelNodeIdRef" type="xsd:string" use="required"/>
+  </xsd:complexType>
+  
+  <!-- definition of additional control points for edges -->
+  <xsd:complexType name="additionalControlPoints">
+    <xsd:sequence>
+      <xsd:element name="AdditionalControlPoint" type="additionalControlPoint" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <xsd:complexType name="additionalControlPoint">
+    <xsd:attribute name="xCoordinate" use="required">
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:double">
+          <xsd:minInclusive value="0.0"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:attribute>
+    <xsd:attribute name="yCoordinate" use="required">
+      <xsd:simpleType>
+        <xsd:restriction base="xsd:double">
+          <xsd:minInclusive value="0.0"/>
+        </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:attribute>
+  </xsd:complexType>
+
+</xsd:schema>

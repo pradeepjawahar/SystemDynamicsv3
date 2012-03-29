@@ -1,0 +1,6 @@
+<PlanNodes>
+   <PlanNode id="PN0001" name="Range_Plan" startValue="5000">
+      <PlanNodeIncrement id="PI0001" length="360" slope="0" />
+      <PlanNodeIncrement id="PI0002" length="360" slope="0" />
+   </PlanNode>
+</PlanNodes>

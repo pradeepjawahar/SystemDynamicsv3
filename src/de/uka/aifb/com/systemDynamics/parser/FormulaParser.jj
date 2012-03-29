@@ -1,0 +1,219 @@
+/* ======================================================================================================
+ * SystemDynamics: Java application for modeling, visualization and execution of System Dynamics models
+ * ======================================================================================================
+ *
+ * (C) Copyright 2007-2008, Joachim Melcher, Institut AIFB, Universitaet Karlsruhe (TH), Germany
+ *
+ * Project Info:  http://sourceforge.net/projects/system-dynamics
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program; if
+ * not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA  02110-1301, USA.
+ */
+
+options {
+  STATIC = false;
+}
+
+PARSER_BEGIN(FormulaParser)
+
+	package de.uka.aifb.com.systemDynamics.parser;
+
+	import de.uka.aifb.com.systemDynamics.model.*;
+	import java.io.*;
+	import java.util.HashMap;
+
+	/**
+    * This class implements a parser for node formulas.
+    *
+    * The parser was created using JavaCC and the following grammar:
+    *
+    * <pre>
+    * <code>
+    * Expression -> Term ( PLUS Term | MINUS Term )*
+    * Term -> Primary ( TIMES Primary | DIVIDE Primary )*
+    * Primary -> NODE | OPEN_PAR Expression CLOSE_PAR
+    * </code>
+    * </pre>
+    * 
+    * @author Joachim Melcher, University of Karlsruhe, AIFB
+    * @version 1.0
+    */
+	public class FormulaParser {
+	
+	   private HashMap<Integer, AuxiliaryNode> id2auxiliaryNode;
+      private HashMap<Integer, ConstantNode> id2constantNode;
+      private HashMap<Integer, LevelNode> id2levelNode;
+	
+		public static ASTElement parseFormula(String parseString,
+		                                      HashMap<Integer, AuxiliaryNode> id2auxiliaryNode,
+		                                      HashMap<Integer, ConstantNode> id2constantNode,
+		                                      HashMap<Integer, LevelNode> id2levelNode)
+				throws ParseException, TokenMgrError {
+		   if (id2auxiliaryNode == null) {
+		   	throw new IllegalArgumentException("'id2auxiliaryNode' must not be null.");
+		   }
+		   if (id2constantNode == null) {
+		   	throw new IllegalArgumentException("'id2constantNode' must not be null.");
+		   }
+		   if (id2levelNode == null) {
+		   	throw new IllegalArgumentException("'id2levelNode' must not be null.");
+		   }
+
+			Reader reader = new StringReader(parseString);
+			FormulaParser parser = new FormulaParser(reader);
+		   
+		   parser.id2auxiliaryNode = id2auxiliaryNode;
+		   parser.id2constantNode = id2constantNode;
+		   parser.id2levelNode = id2levelNode;
+		   
+			return parser.Start();
+		}
+	}
+
+PARSER_END(FormulaParser)
+
+SKIP: { " " }
+TOKEN: { < PLUS : "+" > }
+TOKEN: { < MINUS : "-" > }
+TOKEN: { < TIMES : "*" > }
+TOKEN: { < DIVIDE : "/" > }
+TOKEN: { < OPEN_PAR : "(" > }
+TOKEN: { < CLOSE_PAR : ")" > }
+TOKEN: { < AUXILIARY_NODE : "AN" > }
+TOKEN: { < CONSTANT_NODE : "CN" > }
+TOKEN: { < LEVEL_NODE : "LN" > }
+TOKEN: { < ID : ["0"-"9"] | ["1"-"9"](["0"-"9"])+ > }
+/*Added - pjawahar */
+TOKEN: { < ROUND : "RD" > }
+TOKEN: { <function: "f()"> }
+
+ASTElement Start() :
+{
+	ASTElement formula;
+}
+{
+	formula = Expression()
+	{
+		return formula;
+	}
+}
+
+ASTElement Expression() :
+{
+	ASTElement formula;
+	ASTElement tempFormula;
+}
+{
+	formula = Term()
+	(
+		<PLUS>
+		tempFormula = Term()
+		{
+			formula = new ASTPlus(formula, tempFormula);
+		}
+	|
+		<MINUS>
+		tempFormula = Term()
+		{
+			formula = new ASTMinus(formula, tempFormula);
+		}
+	)*
+	{
+		return formula;
+	}
+}
+
+ASTElement Term() :
+{
+	ASTElement formula;
+	ASTElement tempFormula;
+}
+{
+	formula = Primary()
+	(
+		<TIMES>
+		tempFormula = Primary()
+		{
+			formula = new ASTMultiply(formula, tempFormula);
+		}
+		|
+		<DIVIDE>
+		tempFormula = Primary()
+		{
+			formula = new ASTDivide(formula, tempFormula);
+		}
+		<ROUND>
+		tempFormula = Primary()
+		{
+			formula = new ASTRound(formula, tempFormula);
+		}
+	)*
+	{
+		return formula;
+	}
+}
+
+ASTElement Primary() :
+{
+	ASTElement formula;
+}
+{
+	(
+		formula = Node()
+	|
+		<OPEN_PAR> formula = Expression() <CLOSE_PAR>
+   )
+	{
+		return formula;
+	}
+}
+
+ASTElement Node() :
+{
+	Token t;
+	ASTElement formula;
+	int id;
+}
+{
+	(<AUXILIARY_NODE> <OPEN_PAR> t = <ID> <CLOSE_PAR>)
+	{
+		id = Integer.parseInt(t.image);
+		formula = id2auxiliaryNode.get(id);
+		if (formula != null) {
+			return formula;
+		} else {
+			throw new ParseException("Auxiliary node with Id " + id + " does not exist.");
+   	}
+	}
+	|
+	(<CONSTANT_NODE> <OPEN_PAR> t = <ID> <CLOSE_PAR>)
+	{
+		id = Integer.parseInt(t.image);
+		formula = id2constantNode.get(id);
+		if (formula != null) {
+			return formula;
+		} else {
+			throw new ParseException("Constant node with Id " + id + " does not exist.");
+   	}
+	}
+	|
+	(<LEVEL_NODE> <OPEN_PAR> t = <ID> <CLOSE_PAR>)
+	{
+		id = Integer.parseInt(t.image);
+		formula = id2levelNode.get(id);
+		if (formula != null) {
+			return formula;
+		} else {
+			throw new ParseException("Level node with Id " + id + " does not exist.");
+   	}
+	}
+}

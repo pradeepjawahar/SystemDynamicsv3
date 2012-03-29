@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- XML Schema compliant, but XMLNodeParameterOutOfRangeException (LN0001) -->
+
+<Model name="Model name" schema="http://www.aifb.uni-karlsruhe.de/com/systemDynamics/model-schema" schemaVersion="1.0">
+  <Nodes>
+    <LevelNodes>
+      <LevelNode id="LN0001" name="Level node 1" startValue="2000000000"/>
+    </LevelNodes>
+  </Nodes>
+</Model>

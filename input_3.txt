@@ -1,0 +1,8 @@
+Range_Target,5000
+Aero_Eff,13.0
+Weight_Ratio,1.315597882
+Range,4982.308287683
+SW_Errors_P1_Detected_S2,1.463250432
+SW_Errors_P2_Detected_S2,77.372600477
+SW_Errors_P1_Undetected_S2,4.895596557
+SW_Errors_P1_Undetected_S2,4.895596557

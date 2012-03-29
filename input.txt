@@ -1,0 +1,13 @@
+Hiring_Rate_Rookie_Staff_AF_S1,0.1
+Hiring_Rate_Pro_Staff_AF_S1,0.1
+Hiring_Rate_Rookie_Staff_En_S1,0.1
+Hiring_Rate_Pro_Staff_En_S1,0.1
+Hiring_Rate_Rookie_Staff_Gen_S2,0.1
+Hiring_Rate_Pro_Staff_Gen_S2,0.1
+Hiring_Rate_Rookie_Staff_QA_S2,0.1
+Hiring_Rate_Pro_Staff_QA_S2,0.1
+Hiring_Rate_Rookie_Staff_S3,0.1
+Hiring_rate_Pro_Staff_S3,0.1
+Design_Review_Freq_S2,0.1
+Range_Target,5000
+

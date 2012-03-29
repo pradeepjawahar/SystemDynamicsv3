@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- not valide model: LevelNode LN0001 has no 'startValue' -->
+
+<Model name="Model name" schema="http://www.aifb.uni-karlsruhe.de/com/systemDynamics/model-schema" schemaVersion="1.0">
+  <Nodes>
+    <LevelNodes>
+      <LevelNode id="LN0001" name="Level node 1"/>
+    </LevelNodes>
+  </Nodes>
+</Model>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Model name="Pradeep" schema="http://www.aifb.uni-karlsruhe.de/com/systemDynamics/model-schema" schemaVersion="1.0">
+  <Nodes>
+    <LevelNodes>
+      <LevelNode id="LN0001" name="Level" startValue="0.0" xCoordinate="222.0" yCoordinate="47.0"/>
+    </LevelNodes>
+    <SourceSinkNodes>
+      <SourceSinkNode id="SN0001" xCoordinate="378.0" yCoordinate="24.0"/>
+      <SourceSinkNode id="SN0002" xCoordinate="20.0" yCoordinate="20.0"/>
+    </SourceSinkNodes>
+    <RateNodes>
+      <RateNode id="RN0001" name="Output" xCoordinate="320.0" yCoordinate="46.0">
+        <Formula>
+          <ASTConstantNode constantNodeIdRef="CN0003"/>
+        </Formula>
+      </RateNode>
+      <RateNode id="RN0002" name="Input" xCoordinate="147.0" yCoordinate="46.0">
+        <Formula>
+          <ASTPlus>
+            <ASTConstantNode constantNodeIdRef="CN0002"/>
+            <ASTMultiply>
+              <ASTConstantNode constantNodeIdRef="CN0001"/>
+              <ASTConstantNode constantNodeIdRef="CN0003"/>
+            </ASTMultiply>
+          </ASTPlus>
+        </Formula>
+      </RateNode>
+    </RateNodes>
+    <ConstantNodes>
+      <ConstantNode constantValue="2.0" id="CN0001" name="B" xCoordinate="230.0" yCoordinate="161.0"/>
+      <ConstantNode constantValue="2.0" id="CN0002" name="A" xCoordinate="156.0" yCoordinate="160.0"/>
+      <ConstantNode constantValue="3.0" id="CN0003" name="C" xCoordinate="308.0" yCoordinate="162.0"/>
+    </ConstantNodes>
+  </Nodes>
+  <Flows>
+    <LevelNode2RateNodeFlow fromLevelNodeIdRef="LN0001" toRateNodeIdRef="RN0001"/>
+    <RateNode2LevelNodeFlow fromRateNodeIdRef="RN0002" toLevelNodeIdRef="LN0001"/>
+    <RateNode2SourceSinkNodeFlow fromRateNodeIdRef="RN0001" toSourceSinkNodeIdRef="SN0001"/>
+    <SourceSinkNode2RateNodeFlow fromSourceSinkNodeIdRef="SN0002" toRateNodeIdRef="RN0002"/>
+  </Flows>
+  <Dependencies>
+    <ConstantNode2RateNodeDependency fromConstantNodeIdRef="CN0002" toRateNodeIdRef="RN0002">
+      <AdditionalControlPoints>
+        <AdditionalControlPoint xCoordinate="149.87090053187313" yCoordinate="128.33053316835955"/>
+      </AdditionalControlPoints>
+    </ConstantNode2RateNodeDependency>
+    <ConstantNode2RateNodeDependency fromConstantNodeIdRef="CN0003" toRateNodeIdRef="RN0002">
+      <AdditionalControlPoints>
+        <AdditionalControlPoint xCoordinate="215.00132245591982" yCoordinate="180.4349500882404"/>
+      </AdditionalControlPoints>
+    </ConstantNode2RateNodeDependency>
+    <ConstantNode2RateNodeDependency fromConstantNodeIdRef="CN0001" toRateNodeIdRef="RN0002">
+      <AdditionalControlPoints>
+        <AdditionalControlPoint xCoordinate="179.6286745429547" yCoordinate="152.81203794512905"/>
+      </AdditionalControlPoints>
+    </ConstantNode2RateNodeDependency>
+    <ConstantNode2RateNodeDependency fromConstantNodeIdRef="CN0003" toRateNodeIdRef="RN0001">
+      <AdditionalControlPoints>
+        <AdditionalControlPoint xCoordinate="364.7434658894666" yCoordinate="124.39503327675853"/>
+      </AdditionalControlPoints>
+    </ConstantNode2RateNodeDependency>
+  </Dependencies>
+</Model>
+

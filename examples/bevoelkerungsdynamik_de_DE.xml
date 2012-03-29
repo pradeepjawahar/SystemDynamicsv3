@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Model name="Bevölkerungsdynamik" schema="http://www.aifb.uni-karlsruhe.de/com/systemDynamics/model-schema" schemaVersion="1.0">
+  <Nodes>
+    <LevelNodes>
+      <LevelNode id="LN0001" name="Alte" startValue="21.0" xCoordinate="701.0" yCoordinate="215.0"/>
+      <LevelNode id="LN0002" name="Eltern" startValue="23.0" xCoordinate="453.0" yCoordinate="215.0"/>
+      <LevelNode id="LN0003" name="Kinder" startValue="13.0" xCoordinate="229.0" yCoordinate="215.0"/>
+    </LevelNodes>
+    <SourceSinkNodes>
+      <SourceSinkNode id="SN0001" xCoordinate="557.0" yCoordinate="43.0"/>
+      <SourceSinkNode id="SN0002" xCoordinate="821.0" yCoordinate="41.0"/>
+      <SourceSinkNode id="SN0003" xCoordinate="316.0" yCoordinate="36.0"/>
+      <SourceSinkNode id="SN0004" xCoordinate="16.0" yCoordinate="191.0"/>
+    </SourceSinkNodes>
+    <RateNodes>
+      <RateNode id="RN0001" name="Geburten" xCoordinate="145.0" yCoordinate="213.0">
+        <Formula>
+          <ASTMultiply>
+            <ASTMultiply>
+              <ASTConstantNode constantNodeIdRef="CN0001"/>
+              <ASTConstantNode constantNodeIdRef="CN0002"/>
+            </ASTMultiply>
+            <ASTLevelNode levelNodeIdRef="LN0002"/>
+          </ASTMultiply>
+        </Formula>
+      </RateNode>
+      <RateNode id="RN0002" name="Kinder -&gt; Eltern" xCoordinate="360.0" yCoordinate="215.0">
+        <Formula>
+          <ASTMultiply>
+            <ASTConstantNode constantNodeIdRef="CN0006"/>
+            <ASTLevelNode levelNodeIdRef="LN0003"/>
+          </ASTMultiply>
+        </Formula>
+      </RateNode>
+      <RateNode id="RN0003" name="Tod von Eltern" xCoordinate="520.0" yCoordinate="149.0">
+        <Formula>
+          <ASTMultiply>
+            <ASTConstantNode constantNodeIdRef="CN0004"/>
+            <ASTLevelNode levelNodeIdRef="LN0002"/>
+          </ASTMultiply>
+        </Formula>
+      </RateNode>
+      <RateNode id="RN0004" name="Eltern -&gt; Alte" xCoordinate="594.0" yCoordinate="215.0">
+        <Formula>
+          <ASTMultiply>
+            <ASTConstantNode constantNodeIdRef="CN0003"/>
+            <ASTLevelNode levelNodeIdRef="LN0002"/>
+          </ASTMultiply>
+        </Formula>
+      </RateNode>
+      <RateNode id="RN0005" name="Tod von Alten" xCoordinate="782.0" yCoordinate="144.0">
+        <Formula>
+          <ASTMultiply>
+            <ASTConstantNode constantNodeIdRef="CN0007"/>
+            <ASTLevelNode levelNodeIdRef="LN0001"/>
+          </ASTMultiply>
+        </Formula>
+      </RateNode>
+      <RateNode id="RN0006" name="Tod von Kindern" xCoordinate="291.0" yCoordinate="139.0">
+        <Formula>
+          <ASTMultiply>
+            <ASTConstantNode constantNodeIdRef="CN0005"/>
+            <ASTLevelNode levelNodeIdRef="LN0003"/>
+          </ASTMultiply>
+        </Formula>
+      </RateNode>
+    </RateNodes>
+    <ConstantNodes>
+      <ConstantNode constantValue="1.25" id="CN0001" name="Geburtenrate" xCoordinate="81.0" yCoordinate="310.0"/>
+      <ConstantNode constantValue="0.017241" id="CN0002" name="Anzahl einzelne Frauen" xCoordinate="151.0" yCoordinate="310.0"/>
+      <ConstantNode constantValue="0.034483" id="CN0003" name="Faktor Eltern -&gt; Alte" xCoordinate="584.0" yCoordinate="305.0"/>
+      <ConstantNode constantValue="0.0050" id="CN0004" name="Sterberate Eltern" xCoordinate="455.0" yCoordinate="85.0"/>
+      <ConstantNode constantValue="0.0040" id="CN0005" name="Sterberate Kinder" xCoordinate="220.0" yCoordinate="82.0"/>
+      <ConstantNode constantValue="0.0625" id="CN0006" name="Faktor Kinder -&gt; Eltern" xCoordinate="349.0" yCoordinate="306.0"/>
+      <ConstantNode constantValue="0.025" id="CN0007" name="Sterberate Alte" xCoordinate="723.0" yCoordinate="79.0"/>
+    </ConstantNodes>
+  </Nodes>
+  <Flows>
+    <LevelNode2RateNodeFlow fromLevelNodeIdRef="LN0001" toRateNodeIdRef="RN0005"/>
+    <RateNode2LevelNodeFlow fromRateNodeIdRef="RN0004" toLevelNodeIdRef="LN0001"/>
+    <LevelNode2RateNodeFlow fromLevelNodeIdRef="LN0002" toRateNodeIdRef="RN0003"/>
+    <LevelNode2RateNodeFlow fromLevelNodeIdRef="LN0002" toRateNodeIdRef="RN0004"/>
+    <RateNode2LevelNodeFlow fromRateNodeIdRef="RN0002" toLevelNodeIdRef="LN0002"/>
+    <LevelNode2RateNodeFlow fromLevelNodeIdRef="LN0003" toRateNodeIdRef="RN0002"/>
+    <LevelNode2RateNodeFlow fromLevelNodeIdRef="LN0003" toRateNodeIdRef="RN0006"/>
+    <RateNode2LevelNodeFlow fromRateNodeIdRef="RN0001" toLevelNodeIdRef="LN0003"/>
+    <RateNode2SourceSinkNodeFlow fromRateNodeIdRef="RN0003" toSourceSinkNodeIdRef="SN0001"/>
+    <RateNode2SourceSinkNodeFlow fromRateNodeIdRef="RN0005" toSourceSinkNodeIdRef="SN0002"/>
+    <RateNode2SourceSinkNodeFlow fromRateNodeIdRef="RN0006" toSourceSinkNodeIdRef="SN0003"/>
+    <SourceSinkNode2RateNodeFlow fromSourceSinkNodeIdRef="SN0004" toRateNodeIdRef="RN0001"/>
+  </Flows>
+  <Dependencies>
+    <LevelNode2RateNodeDependency fromLevelNodeIdRef="LN0002" toRateNodeIdRef="RN0003">
+      <AdditionalControlPoints>
+        <AdditionalControlPoint xCoordinate="564.0" yCoordinate="212.0"/>
+      </AdditionalControlPoints>
+    </LevelNode2RateNodeDependency>
+    <LevelNode2RateNodeDependency fromLevelNodeIdRef="LN0001" toRateNodeIdRef="RN0005">
+      <AdditionalControlPoints>
+        <AdditionalControlPoint xCoordinate="812.0" yCoordinate="216.0"/>
+      </AdditionalControlPoints>
+    </LevelNode2RateNodeDependency>
+    <LevelNode2RateNodeDependency fromLevelNodeIdRef="LN0003" toRateNodeIdRef="RN0006">
+      <AdditionalControlPoints>
+        <AdditionalControlPoint xCoordinate="337.0" yCoordinate="207.0"/>
+      </AdditionalControlPoints>
+    </LevelNode2RateNodeDependency>
+    <LevelNode2RateNodeDependency fromLevelNodeIdRef="LN0002" toRateNodeIdRef="RN0004">
+      <AdditionalControlPoints>
+        <AdditionalControlPoint xCoordinate="540.0" yCoordinate="272.0"/>
+      </AdditionalControlPoints>
+    </LevelNode2RateNodeDependency>
+    <LevelNode2RateNodeDependency fromLevelNodeIdRef="LN0002" toRateNodeIdRef="RN0001">
+      <AdditionalControlPoints>
+        <AdditionalControlPoint xCoordinate="363.0" yCoordinate="381.0"/>
+      </AdditionalControlPoints>
+    </LevelNode2RateNodeDependency>
+    <LevelNode2RateNodeDependency fromLevelNodeIdRef="LN0003" toRateNodeIdRef="RN0002">
+      <AdditionalControlPoints>
+        <AdditionalControlPoint xCoordinate="325.0" yCoordinate="269.0"/>
+      </AdditionalControlPoints>
+    </LevelNode2RateNodeDependency>
+  </Dependencies>
+</Model>

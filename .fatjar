@@ -1,0 +1,14 @@
+#Fat Jar Configuration File
+#Fri Sep 23 15:16:16 EDT 2011
+onejar.license.required=true
+manifest.classpath=
+manifest.removesigners=true
+onejar.checkbox=false
+jarname=systemdynamics.jar
+manifest.mergeall=true
+manifest.mainclass=de.uka.aifb.com.systemDynamics.SystemDynamicsCommandLine
+manifest.file=<createnew>
+jarname.isextern=false
+onejar.expand=
+excludes=
+includes=

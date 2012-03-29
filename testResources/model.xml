@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Model name="Model name" schema="http://www.aifb.uni-karlsruhe.de/com/systemDynamics/model-schema" schemaVersion="1.0">
+	<Nodes>
+		<LevelNodes>
+			<LevelNode id="LN0001" name="Level node 1" startValue="0"/>
+			<LevelNode id="LN0002" name="Level node 2" startValue="5"/>
+		</LevelNodes>
+		<SourceSinkNodes>
+			<SourceSinkNode id="SN0001"/>
+		</SourceSinkNodes>
+		<RateNodes>
+			<RateNode id="RN0001" name="Rate node 1">
+				<Formula>
+					<ASTPlus>
+						<ASTPlus>
+							<ASTAuxiliaryNode auxiliaryNodeIdRef="AN0001"/>
+							<ASTAuxiliaryNode auxiliaryNodeIdRef="AN0002"/>
+						</ASTPlus>
+						<ASTConstantNode constantNodeIdRef="CN0001"/>
+					</ASTPlus>
+				</Formula>
+			</RateNode>
+			<RateNode id="RN0002" name="Rate node 2">
+				<Formula>
+					<ASTMultiply>
+						<ASTConstantNode constantNodeIdRef="CN0002"/>
+						<ASTMinus>
+							<ASTLevelNode levelNodeIdRef="LN0001"/>
+							<ASTAuxiliaryNode auxiliaryNodeIdRef="AN0001"/>
+						</ASTMinus>
+					</ASTMultiply>
+				</Formula>
+			</RateNode>
+		</RateNodes>
+		<AuxiliaryNodes>
+			<AuxiliaryNode id="AN0001" name="Auxiliary node 1">
+				<Formula>
+					<ASTLevelNode levelNodeIdRef="LN0002"/>
+				</Formula>
+			</AuxiliaryNode>
+			<AuxiliaryNode id="AN0002" name="Auxiliary node 2">
+				<Formula>
+					<ASTConstantNode constantNodeIdRef="CN0002"/>
+				</Formula>
+			</AuxiliaryNode>
+		</AuxiliaryNodes>
+		<ConstantNodes>
+			<ConstantNode id="CN0001" name="Constant node 1" constantValue="1"/>
+			<ConstantNode id="CN0002" name="Constant node 2" constantValue="-1"/>
+		</ConstantNodes>
+	</Nodes>
+	<Flows>
+		<LevelNode2RateNodeFlow fromLevelNodeIdRef="LN0001" toRateNodeIdRef="RN0001"/>
+		<RateNode2LevelNodeFlow fromRateNodeIdRef="RN0001" toLevelNodeIdRef="LN0002"/>
+		<LevelNode2RateNodeFlow fromLevelNodeIdRef="LN0002" toRateNodeIdRef="RN0002"/>
+		<RateNode2SourceSinkNodeFlow fromRateNodeIdRef="RN0002" toSourceSinkNodeIdRef="SN0001"/>
+	</Flows>
+</Model>

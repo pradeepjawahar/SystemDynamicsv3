@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- XML Schema compliant, but UselessNodeException (CN0001) -->
+
+<Model name="Model name" schema="http://www.aifb.uni-karlsruhe.de/com/systemDynamics/model-schema" schemaVersion="1.0">
+  <Nodes>
+    <LevelNodes>
+      <LevelNode id="LN0001" name="Level node 1" startValue="0"/>
+    </LevelNodes>
+    <ConstantNodes>
+      <ConstantNode id="CN0001" name="Constant node 1" constantValue="0"/>
+    </ConstantNodes>
+  </Nodes>
+</Model>

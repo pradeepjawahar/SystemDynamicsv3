@@ -1,0 +1,30 @@
+int x = 0;
+		final XYSeries series1 = new XYSeries("Range Target");
+		final XYSeries series2 = new XYSeries("Range");
+		final XYSeries series3 = new XYSeries("PlannedRange");
+		double planned_range = 4000;
+		double slope = 1;
+		for(int i =-1 ;i<run;i++)
+		{
+			String outputFile = getFileName(i,fname);
+			CsvReader products = new CsvReader(outputFile,';');
+			products.skipLine();
+			products.readHeaders();
+			while (products.readRecord()) {
+				String range = products.get("Range");
+				//r_vector.add(Double.parseDouble(range));
+				String rangeTarget = products.get("Range_Target");
+				//nrt_vector.add(Double.parseDouble(rangeTarget));
+				series1.add(x,Double.parseDouble(rangeTarget));
+				series2.add(x,Double.parseDouble(range));
+				series3.add(x,planned_range);
+				planned_range = planned_range - slope;
+				x++;
+			}
+
+			products.close();
+		}
+		final XYSeriesCollection dataset = new XYSeriesCollection();
+        dataset.addSeries(series1);
+        dataset.addSeries(series2);
+        dataset.addSeries(series3);

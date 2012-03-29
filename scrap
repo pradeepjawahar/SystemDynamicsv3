@@ -1,0 +1,101 @@
+		//Using charts XML
+		SysDynChart chartObj = chartMap.get("TPM: Range");
+		Vector<ChartLevelNode> levelNodesVector= chartObj.getChartLevelNodes();
+		Vector<LevelNodeGraphInfo> levelVector = new Vector<LevelNodeGraphInfo>();
+		
+		for(ChartLevelNode lNode : levelNodesVector){
+			LevelNodeGraphInfo levelNodeInfo = new LevelNodeGraphInfo();
+			levelNodeInfo.setId(lNode.getLevelIdRef());
+			levelNodeInfo.setNodeName(levelNodes.get(lNode.getLevelIdRef()));
+			levelNodeInfo.setSeries(new XYSeries(lNode.getLabel()));
+			levelVector.add(levelNodeInfo);
+		}
+		int xIntercept = 0;
+		for(int i=-1;i<run;i++){
+			String outputFile = getFileName(i,fname);
+			CsvReader products = new CsvReader(outputFile,';');
+			products.skipLine();
+			products.readHeaders();
+			while (products.readRecord()) {
+				for(LevelNodeGraphInfo lnode : levelVector){
+					lnode.getSeries().add(xIntercept,Double.parseDouble(products.get(lnode.getNodeName())));
+				}
+				xIntercept++;
+			}
+			products.close();
+		}
+		final XYSeriesCollection dataset = new XYSeriesCollection();
+		for(LevelNodeGraphInfo lnode : levelVector){
+			dataset.addSeries(lnode.getSeries());
+		}
+		//Planned Variable
+		Vector<PlannedRef> planRefVector = chartObj.getPlannedNodes();
+		Vector<PlannedVariableExt> planVector = new Vector<PlannedVariableExt>(); 
+		for(PlannedRef planRef : planRefVector){
+			PlannedVariable plan = plannedMap.get(planRef.getId());
+			PlannedVariableExt planExt = new PlannedVariableExt();
+			planExt.setLabel(planRef.getLabel());
+			planExt.setName(plan.getName());
+			planExt.setStartValue(plan.getStartValue());
+			planExt.setPlannedIncrement(plan.getPlannedIncrement());
+			planVector.add(planExt);
+		}
+		
+        // create the chart...
+		int x1 = 0, x2=0;
+		double y1, y2;
+		for(PlannedVariableExt plannedExt: planVector){
+			if(x2>=xIntercept)
+				break;
+			XYSeries planSeries = new XYSeries(plannedExt.getLabel());
+			y1 = Double.parseDouble(plannedExt.getStartValue());
+			for(Increment inc : plannedExt.getPlannedIncrement()){
+				if(x2>=xIntercept)
+					break;
+				for(int i = 0; i < inc.getLength();i++){
+					if(x2>=xIntercept)
+						break;
+					y2 = inc.getSlope() * (x2-x1) + y1;
+					planSeries.add(x2, y2);
+					x1 = x2;
+					y1 = y2;
+					x2++;
+				}
+				 
+			}
+			dataset.addSeries(planSeries);
+		}
+        final JFreeChart chart = ChartFactory.createXYLineChart(
+            chartObj.getName(),      // chart title
+            chartObj.getXLabel(),                      // x axis label
+            chartObj.getYLabel(),                      // y axis label
+            dataset,                  // data
+            PlotOrientation.VERTICAL,
+            true,                     // include legend
+            true,                     // tooltips
+            false                     // urls
+        );
+
+        // NOW DO SOME OPTIONAL CUSTOMISATION OF THE CHART...
+        chart.setBackgroundPaint(Color.white);
+        
+//        final StandardLegend legend = (StandardLegend) chart.getLegend();
+//          legend.setDisplaySeriesShapes(true);
+        
+        // get a reference to the plot for further customisation...
+        final XYPlot plot = chart.getXYPlot();
+        plot.setBackgroundPaint(Color.lightGray);
+//        plot.setAxisOffset(new Spacer(Spacer.ABSOLUTE, 5.0, 5.0, 5.0, 5.0));
+       // plot.setDomainGridlinePaint(Color.white);
+        //plot.setRangeGridlinePaint(Color.white);
+        
+        final XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
+        renderer.setSeriesLinesVisible(0, false);
+        renderer.setSeriesShapesVisible(1, false);
+        plot.setRenderer(renderer);
+
+        // change the auto tick unit selection to integer units only...
+        //final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
+        //rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+        File imgFile = new File(folder+"/"+chartObj.getFile()+"_"+run+".jpg");
+	    ChartUtilities.saveChartAsJPEG(imgFile, chart, 550, 400);
